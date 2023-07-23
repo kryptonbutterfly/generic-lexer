@@ -1,0 +1,16 @@
+package de.tinycodecrank.lexer;
+
+final class DuplicateOperatorException extends RuntimeException
+{
+	private static final long serialVersionUID = 1L;
+	
+	DuplicateOperatorException(String msg, Object... args)
+	{
+		super(msg.formatted(args));
+	}
+	
+	DuplicateOperatorException(Operators first, Operators second)
+	{
+		this("Operator '%s' is defined in %s and %s!", first.op(), first, second);
+	}
+}
