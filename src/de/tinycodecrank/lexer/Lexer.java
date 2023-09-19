@@ -24,10 +24,12 @@ public final class Lexer
 			.toArray(IsStartOf[]::new);
 	}
 	
-	public ArrayList<Section<?>> lexFile(String text, String fileName)
+	public LexedFile lexFile(String text, String fileName)
 	{
-		return new LexerRun(text, fileName)
-			.lex();
+		return new LexedFile(
+			fileName,
+			new LexerRun(text, fileName)
+				.lex());
 	}
 	
 	public ArrayList<Section<?>> lex(String text)

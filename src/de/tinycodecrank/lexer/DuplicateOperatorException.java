@@ -9,7 +9,7 @@ final class DuplicateOperatorException extends RuntimeException
 		super(msg.formatted(args));
 	}
 	
-	DuplicateOperatorException(Operators first, Operators second)
+	DuplicateOperatorException(IOperators first, IOperators second)
 	{
 		this("Operator '%s' is defined in %s and %s!", first.op(), first, second);
 	}

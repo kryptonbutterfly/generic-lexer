@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 
-public final class LexerBuilder<EnumKeywords extends Enum<EnumKeywords> & Keywords, EnumOperators extends Enum<EnumOperators> & Operators>
+public final class LexerBuilder<EnumKeywords extends Enum<EnumKeywords> & Keywords, EnumOperators extends Enum<EnumOperators> & IOperators>
 {
 	private final EnumKeywords[]	keywords;
 	private final EnumOperators[]	operators;
@@ -31,7 +31,7 @@ public final class LexerBuilder<EnumKeywords extends Enum<EnumKeywords> & Keywor
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static <EnumOperators extends Enum<EnumOperators> & Operators> EnumOperators[] toOperatorsArray(
+	private static <EnumOperators extends Enum<EnumOperators> & IOperators> EnumOperators[] toOperatorsArray(
 		Class<EnumOperators> operators)
 	{
 		if (operators == null)
@@ -75,8 +75,8 @@ public final class LexerBuilder<EnumKeywords extends Enum<EnumKeywords> & Keywor
 	
 	private void sortByLength()
 	{
-		Arrays.sort(operators, (first, second) -> Integer.compare(first.op().length(), second.op().length()));
-		Arrays.sort(keywords, (first, second) -> Integer.compare(first.keyword().length(), second.keyword().length()));
+		Arrays.sort(operators, (first, second) -> Integer.compare(second.op().length(), first.op().length()));
+		Arrays.sort(keywords, (first, second) -> Integer.compare(second.keyword().length(), first.keyword().length()));
 	}
 	
 	private final Matcher[] createMatcher()

@@ -1,6 +1,6 @@
 package de.tinycodecrank.lexer;
 
-public interface Operators
+public interface IOperators
 {
 	/**
 	 * @return The operators precedence
