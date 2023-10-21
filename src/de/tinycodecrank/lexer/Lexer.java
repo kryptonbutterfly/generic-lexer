@@ -24,33 +24,35 @@ public final class Lexer
 			.toArray(IsStartOf[]::new);
 	}
 	
-	public LexedFile lexFile(String text, String fileName)
+	public LexedFile lexFile(String text, String fileName, int tabWidth)
 	{
 		return new LexedFile(
 			fileName,
-			new LexerRun(text, fileName)
+			new LexerRun(text, fileName, tabWidth)
 				.lex());
 	}
 	
-	public ArrayList<Section<?>> lex(String text)
+	public ArrayList<Section<?>> lex(String text, int tabWidth)
 	{
-		return new LexerRun(text, null).lex();
+		return new LexerRun(text, null, tabWidth).lex();
 	}
 	
 	private final class LexerRun
 	{
-		private final String fileName;
+		private final String	fileName;
+		private final int		tabWidth;
 		
 		private int			offset	= 0;
 		private Location	location;
 		
 		private final String text;
 		
-		private LexerRun(String text, String fileName)
+		private LexerRun(String text, String fileName, int tabWidth)
 		{
 			this.text		= text;
 			this.fileName	= fileName;
 			this.location	= new Location(1, 0, fileName);
+			this.tabWidth	= tabWidth;
 		}
 		
 		private ArrayList<Section<?>> lex()
@@ -65,11 +67,11 @@ public final class Lexer
 					{
 						final var value = text.substring(offset, start);
 						buildFromUnspecified(value, location, tokens);
-						location = Location.calcEnd(location, value, "\n", fileName);
+						location = Location.calcEnd(location, value, "\n", fileName, tabWidth);
 					}
 					tokens.add(next.match().apply(location));
 					offset		= next.end();
-					location	= Location.calcEnd(location, text.substring(start, offset), "\n", fileName);
+					location	= Location.calcEnd(location, text.substring(start, offset), "\n", fileName, tabWidth);
 				}).else_(() ->
 				{
 					buildFromUnspecified(text.substring(offset), location, tokens);

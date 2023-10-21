@@ -10,7 +10,7 @@ public record Location(int line, int col, String file) implements Comparable<Loc
 	@Override
 	public String toString()
 	{
-		return ":" + line + ":" + col;
+		return file + "(" + line + ":" + col + ")";
 	}
 	
 	public String errorPos()
@@ -18,15 +18,21 @@ public record Location(int line, int col, String file) implements Comparable<Loc
 		if (file == null)
 			return "at (%d:%d)".formatted(line, col);
 		
-		final var fileName = new File(file).getName();
+		final var fileName = new File(file).toString();
 		return "at (%s:%d:%d)".formatted(fileName, line, col);
 	}
 	
-	public static Location calcEnd(Location start, String value, String lineSeparator, String file)
+	public static Location calcEnd(Location start, String value, String lineSeparator, String file, int tabSize)
 	{
-		final var	split	= value.split(lineSeparator, -1);
-		final var	lines	= split.length - 1;
-		final var	cols	= split[lines].length();
+		final var	split		= value.split(lineSeparator, -1);
+		final var	lines		= split.length - 1;
+		final var	lastLine	= split[lines];
+		
+		final int	tabless		= lastLine.replace("\t", "").length();
+		final int	tabCount	= lastLine.length() - tabless;
+		
+		final var cols = tabless + tabCount * tabSize;
+		
 		if (lines == 0)
 			return new Location(start.line, start.col + cols, file);
 		return new Location(start.line + lines, cols, file);
