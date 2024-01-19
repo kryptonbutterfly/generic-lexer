@@ -1,4 +1,4 @@
-package de.tinycodecrank.lexer;
+package kryptonbutterfly.lexer;
 
 /**
  * This type is the fallback for areas that did not match any other token type

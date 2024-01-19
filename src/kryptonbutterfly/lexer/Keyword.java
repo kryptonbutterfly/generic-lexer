@@ -1,4 +1,4 @@
-package de.tinycodecrank.lexer;
+package kryptonbutterfly.lexer;
 
 public record Keyword(Keywords value, Location loc) implements Section<Keywords>
 {

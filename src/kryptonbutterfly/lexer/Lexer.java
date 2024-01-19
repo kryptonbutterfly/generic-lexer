@@ -1,13 +1,13 @@
-package de.tinycodecrank.lexer;
+package kryptonbutterfly.lexer;
 
-import static de.tinycodecrank.math.utils.range.Range.*;
+import static kryptonbutterfly.math.utils.range.Range.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import de.tinycodecrank.monads.opt.Opt;
+import kryptonbutterfly.monads.opt.Opt;
 
 public final class Lexer
 {
@@ -60,8 +60,7 @@ public final class Lexer
 			final var tokens = new ArrayList<Section<?>>();
 			
 			while (offset < text.length())
-				findStart().if_(next ->
-				{
+				findStart().if_(next -> {
 					final int start = next.start();
 					if (next.start() > offset)
 					{
@@ -72,8 +71,7 @@ public final class Lexer
 					tokens.add(next.match().apply(location));
 					offset		= next.end();
 					location	= Location.calcEnd(location, text.substring(start, offset), "\n", fileName, tabWidth);
-				}).else_(() ->
-				{
+				}).else_(() -> {
 					buildFromUnspecified(text.substring(offset), location, tokens);
 					offset = text.length();
 				});

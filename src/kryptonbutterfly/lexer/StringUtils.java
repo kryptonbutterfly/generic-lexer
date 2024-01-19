@@ -1,12 +1,12 @@
-package de.tinycodecrank.lexer;
+package kryptonbutterfly.lexer;
 
-import static de.tinycodecrank.math.utils.range.Range.*;
+import static kryptonbutterfly.math.utils.range.Range.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.IntPredicate;
 
-import de.tinycodecrank.monads.opt.Opt;
+import kryptonbutterfly.monads.opt.Opt;
 
 public final class StringUtils
 {

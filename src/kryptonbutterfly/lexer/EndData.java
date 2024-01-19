@@ -1,4 +1,4 @@
-package de.tinycodecrank.lexer;
+package kryptonbutterfly.lexer;
 
 public record EndData(int start, String raw, Location loc)
 {

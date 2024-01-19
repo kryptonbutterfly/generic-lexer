@@ -1,9 +1,9 @@
-package de.tinycodecrank.lexer;
+package kryptonbutterfly.lexer;
 
-import de.tinycodecrank.functions.ObjIntBiPredicate;
-import de.tinycodecrank.functions.applicable.ApplicableLeft;
-import de.tinycodecrank.functions.int_.IntBiPredicate;
-import de.tinycodecrank.functions.int_.applicable.IntApplicableRight;
+import kryptonbutterfly.functions.ObjIntBiPredicate;
+import kryptonbutterfly.functions.applicable.ApplicableLeft;
+import kryptonbutterfly.functions.int_.IntBiPredicate;
+import kryptonbutterfly.functions.int_.applicable.IntApplicableRight;
 
 @FunctionalInterface
 public interface IsStartOf extends ApplicableLeft<String, IntBiPredicate>, IntApplicableRight<ObjIntBiPredicate<String>>

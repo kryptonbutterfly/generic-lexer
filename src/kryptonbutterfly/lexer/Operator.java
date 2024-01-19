@@ -1,8 +1,8 @@
-package de.tinycodecrank.lexer;
+package kryptonbutterfly.lexer;
 
 import java.util.function.ToIntFunction;
 
-import de.tinycodecrank.lexer.Matcher.Creator;
+import kryptonbutterfly.lexer.Matcher.Creator;
 
 public record Operator(IOperators value, Location loc) implements Section<IOperators>
 {

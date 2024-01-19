@@ -1,8 +1,8 @@
-module GenericLexer
+module kryptonbutterfly.GenericLexer
 {
-	exports de.tinycodecrank.lexer;
+	exports kryptonbutterfly.lexer;
 	
-	requires transitive de.tinycodecrank.Functional;
-	requires de.tinycodecrank.mathUtils;
-	requires de.tinycodecrank.Monads;
+	requires transitive kryptonbutterfly.Functional;
+	requires kryptonbutterfly.mathUtils;
+	requires kryptonbutterfly.Monads;
 }

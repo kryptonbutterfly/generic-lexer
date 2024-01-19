@@ -1,4 +1,4 @@
-package de.tinycodecrank.lexer;
+package kryptonbutterfly.lexer;
 
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
