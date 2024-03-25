@@ -10,11 +10,11 @@ public final class LexerBuilder<EnumKeywords extends Enum<EnumKeywords> & Keywor
 {
 	private final EnumKeywords[]	keywords;
 	private final EnumOperators[]	operators;
-	private final UnspecMatcher		unspec;
+	private final UnspecMatcher[]	unspec;
 	// private final HashSet<Matcher> matcher = new HashSet<>();
 	private final LinkedHashSet<Matcher> matcher = new LinkedHashSet<>();
 	
-	public LexerBuilder(Class<EnumKeywords> keywords, Class<EnumOperators> operators, UnspecMatcher unspec)
+	public LexerBuilder(Class<EnumKeywords> keywords, Class<EnumOperators> operators, UnspecMatcher... unspec)
 	{
 		this.keywords	= toKeywordsArray(keywords);
 		this.operators	= toOperatorsArray(operators);
@@ -97,7 +97,8 @@ public final class LexerBuilder<EnumKeywords extends Enum<EnumKeywords> & Keywor
 		for (final var key : keywords)
 			list.add(new UnspecMatcher(key.keyword()::equals, (_val, loc) -> new Keyword(key, loc)));
 		
-		list.add(unspec);
+		for (final var matcher : unspec)
+			list.add(matcher);
 		return list.toArray(UnspecMatcher[]::new);
 	}
 	
