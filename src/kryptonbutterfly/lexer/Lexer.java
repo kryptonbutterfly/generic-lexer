@@ -24,35 +24,37 @@ public final class Lexer
 			.toArray(IsStartOf[]::new);
 	}
 	
-	public LexedFile lexFile(String text, String fileName, int tabWidth)
+	public LexedFile lexFile(String text, String fileName, int tabWidth, int columnStartIndex)
 	{
 		return new LexedFile(
 			fileName,
-			new LexerRun(text, fileName, tabWidth)
+			new LexerRun(text, fileName, tabWidth, columnStartIndex)
 				.lex());
 	}
 	
-	public ArrayList<Section<?>> lex(String text, int tabWidth)
+	public ArrayList<Section<?>> lex(String text, int tabWidth, int columnStartIndex)
 	{
-		return new LexerRun(text, null, tabWidth).lex();
+		return new LexerRun(text, null, tabWidth, columnStartIndex).lex();
 	}
 	
 	private final class LexerRun
 	{
 		private final String	fileName;
 		private final int		tabWidth;
+		private final int		columnStartIndex;
 		
 		private int			offset	= 0;
 		private Location	location;
 		
 		private final String text;
 		
-		private LexerRun(String text, String fileName, int tabWidth)
+		private LexerRun(String text, String fileName, int tabWidth, int columnStartIndex)
 		{
-			this.text		= text;
-			this.fileName	= fileName;
-			this.location	= new Location(1, 0, fileName);
-			this.tabWidth	= tabWidth;
+			this.text				= text;
+			this.fileName			= fileName;
+			this.location			= new Location(1, columnStartIndex, fileName);
+			this.tabWidth			= tabWidth;
+			this.columnStartIndex	= columnStartIndex;
 		}
 		
 		private ArrayList<Section<?>> lex()
@@ -66,11 +68,12 @@ public final class Lexer
 					{
 						final var value = text.substring(offset, start);
 						buildFromUnspecified(value, location, tokens);
-						location = Location.calcEnd(location, value, "\n", fileName, tabWidth);
+						location = Location.calcEnd(location, value, "\n", fileName, tabWidth, columnStartIndex);
 					}
 					tokens.add(next.match().apply(location));
 					offset		= next.end();
-					location	= Location.calcEnd(location, text.substring(start, offset), "\n", fileName, tabWidth);
+					location	= Location
+						.calcEnd(location, text.substring(start, offset), "\n", fileName, tabWidth, columnStartIndex);
 				}).else_(() -> {
 					buildFromUnspecified(text.substring(offset), location, tokens);
 					offset = text.length();
