@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kryptonbutterfly</groupId>
 	<artifactId>generic-lexer</artifactId>
-	<version>2.1.0</version>
+	<version>3.0.0</version>
 	<name>Generic Lexer</name>
 	
 	<distributionManagement>

@@ -22,7 +22,13 @@ public record Location(int line, int col, String file) implements Comparable<Loc
 		return "at (%s:%d:%d)".formatted(fileName, line, col);
 	}
 	
-	public static Location calcEnd(Location start, String value, String lineSeparator, String file, int tabSize)
+	public static Location calcEnd(
+		Location start,
+		String value,
+		String lineSeparator,
+		String file,
+		int tabSize,
+		int colStartIndex)
 	{
 		final var	split		= value.split(lineSeparator, -1);
 		final var	lines		= split.length - 1;
@@ -31,11 +37,11 @@ public record Location(int line, int col, String file) implements Comparable<Loc
 		final int	tabless		= lastLine.replace("\t", "").length();
 		final int	tabCount	= lastLine.length() - tabless;
 		
-		final var cols = tabless + tabCount * tabSize;
+		final int cols = tabless + tabCount * tabSize;
 		
 		if (lines == 0)
 			return new Location(start.line, start.col + cols, file);
-		return new Location(start.line + lines, cols, file);
+		return new Location(start.line + lines, cols + colStartIndex, file);
 	}
 	
 	public Location addCol(int amount)
